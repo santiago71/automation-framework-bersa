@@ -1,51 +1,69 @@
 from selenium import webdriver
 import pytest
-import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from utils.loginpage import login
+import pytest_html
+from page.login_page import LoginPage
+from page.inventory_page import InventoryPage
+from page.cart_page import CartPage
+import os
 
-# Define un fixture de pytest llamado "driver"
-# Este fixture se encarga de:
-# - abrir Chrome
-# - configurarlo
-# - entregarlo a los tests
-# - y cerrarlo automáticamente al finalizar
 @pytest.fixture
 def driver():
 
-    # Crea un objeto de configuración para Chrome
     options = webdriver.ChromeOptions()
 
-    # Agrega el argumento para abrir Chrome en modo incógnito
     options.add_argument("--incognito")
+    options.add_argument("--headless=new")
+    options.add_argument("--window-size=1920,1080")
 
-    # Inicializa el navegador Chrome utilizando
-    # las opciones configuradas anteriormente
+   
     driver = webdriver.Chrome(options=options)
 
-    # Entrega la instancia del navegador al test
-    # o a otros fixtures que lo necesiten
+  
     yield driver
 
-    # Se ejecuta automáticamente al finalizar el test
-    # Cierra completamente el navegador y la sesión Selenium
+    
     driver.quit()
 
-
-# Define un segundo fixture llamado "login_driver"
-# Este fixture reutiliza el fixture "driver"
-# y además realiza el login automáticamente
 @pytest.fixture
-def login_driver(driver):
+def login_p(driver):
+    
+    return LoginPage(driver)
 
-    # Ejecuta la función login()
-    # pasándole la instancia del navegador
-    login(driver)
 
-    # Devuelve el navegador ya autenticado
-    # para que los tests lo utilicen
-    return driver
+@pytest.fixture
+def inventory_page(driver):
 
+    page = LoginPage(driver)
+    
+    page.login("standard_user", "secret_sauce")
+
+    return InventoryPage(driver)
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+
+    outcome = yield
+
+    report = outcome.get_result()
+
+    extra = getattr(report, "extras", [])
+
+    if report.when == "call" and report.failed:
+
+        driver = item.funcargs.get("driver")
+
+        if driver:
+
+            os.makedirs("screenshots", exist_ok=True)
+
+            screenshot_name = f"screenshots/{item.name}.png"
+
+            driver.save_screenshot(screenshot_name)
+
+            if os.path.exists(screenshot_name):
+
+                html = f'<div><img src="{screenshot_name}" alt="screenshot" width="600" height="300"></div>'
+
+                extra.append(pytest_html.extras.html(html))
+
+        report.extras = extra
