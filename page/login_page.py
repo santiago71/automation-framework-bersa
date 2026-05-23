@@ -5,34 +5,35 @@ from page.base_page import BasePage
 
 class LoginPage(BasePage):
 
-    USERNAME_INPUT = (By.ID, "user-name")
+    USERNAME_INPUT = (By.ID, "username")
+
+    CONTINUE_BUTTON = (By.ID, "global.continue")
 
     PASSWORD_INPUT = (By.ID, "password")
 
-    LOGIN_BUTTON = (By.ID, "login-button")
-    
-    ERROR_MESSAGE = (By.CSS_SELECTOR, '[data-test="error"]')
+    LOGIN_BUTTON = (By.ID, "global.getInto")
 
+    LOGIN_FAILED = (By.CSS_SELECTOR, "notification-message")
 
     def open_page(self):
 
-        self.driver.get("https://www.saucedemo.com/")
-
+        self.driver.get("https://betest01.bancoentrerios.com/loginStep1")
 
     def enter_username(self, username):
 
         self.write(self.USERNAME_INPUT, username)
 
+    def continue_user(self):
+
+        self.click(self.CONTINUE_BUTTON)
 
     def enter_password(self, password):
 
         self.write(self.PASSWORD_INPUT, password)
 
-
     def click_login(self):
 
         self.click(self.LOGIN_BUTTON)
-
 
     def login(self, username, password):
 
@@ -40,10 +41,14 @@ class LoginPage(BasePage):
 
         self.enter_username(username)
 
+        self.continue_user()
+
         self.enter_password(password)
 
         self.click_login()
-        
+
     def get_error_message(self):
-        
-        return self.get_text(self.ERROR_MESSAGE)        
+
+        element = self.find_element(self.LOGIN_FAILED)
+        message = element.text
+        return message

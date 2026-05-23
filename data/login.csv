@@ -1,5 +1,4 @@
-username,password,debe_funcionar,error_message
-standard_user,secret_sauce,True
-locked_out_user,secret_sauce,False,"Epic sadface: Sorry, this user has been locked out."
-problem_user,secret_sauce,True
-usuario_malo,password_malo,False,"Epic sadface: Username and password do not match any user in this service"
+username,password,expected, error_message
+arrollos08,Practia25*,True
+copra001,Practia2222, False,"Usuario y/o contraseña incorrecto"
+casali01,sdsdd, False,"Te informamos que tu usuario se encuentra bloqueado. Si recordás la contraseña, seleccioná "Desbloquear Usuario", en caso contrario, seleccioná "Blanquear contraseña.""

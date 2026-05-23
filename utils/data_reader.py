@@ -12,7 +12,7 @@ def read_csv(file_path):
         for row in reader:
 
             data.append(
-                (row["username"], row["password"], row["debe_funcionar"] == "True", row["error_message"])
+                (row["username"], row["password"], row["debe_funcionar",] == "True", row["expected"])
             )
 
     return data

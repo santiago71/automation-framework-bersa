@@ -2,8 +2,6 @@ from selenium import webdriver
 import pytest
 import pytest_html
 from page.login_page import LoginPage
-from page.inventory_page import InventoryPage
-from page.cart_page import CartPage
 import os
 
 
@@ -13,7 +11,7 @@ def driver():
     options = webdriver.ChromeOptions()
 
     options.add_argument("--incognito")
-    options.add_argument("--headless=new")
+    # options.add_argument("--headless=new")
     options.add_argument("--window-size=1920,1080")
 
     driver = webdriver.Chrome(options=options)
@@ -27,16 +25,6 @@ def driver():
 def login_p(driver):
 
     return LoginPage(driver)
-
-
-@pytest.fixture
-def inventory_page(driver):
-
-    page = LoginPage(driver)
-
-    page.login("standard_user", "secret_sauce")
-
-    return InventoryPage(driver)
 
 
 @pytest.hookimpl(hookwrapper=True)

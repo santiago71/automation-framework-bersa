@@ -31,3 +31,4 @@ class BasePage:
     def find_elements(self, locator):
         
         return self.driver.find_elements(*locator)
+    
