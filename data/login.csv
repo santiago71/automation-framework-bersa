@@ -1,4 +1,4 @@
-username,password,debe_funcionar,error_message
+username,password,valid,error_message
 standard_user,secret_sauce,True
 locked_out_user,secret_sauce,False,"Epic sadface: Sorry, this user has been locked out."
 problem_user,secret_sauce,True

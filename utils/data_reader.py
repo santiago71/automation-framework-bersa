@@ -1,18 +1,18 @@
 import csv
+import json
 
 
 def read_csv(file_path):
-
-    data = []
 
     with open(file_path, newline="") as csvfile:
 
         reader = csv.DictReader(csvfile)
 
-        for row in reader:
+        return list(reader)
 
-            data.append(
-                (row["username"], row["password"], row["debe_funcionar"] == "True", row["error_message"])
-            )
 
-    return data
+def read_json(file_path):
+
+    with open(file_path, encoding="utf-8") as file:
+
+        return json.load(file)
