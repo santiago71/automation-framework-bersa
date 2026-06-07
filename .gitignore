@@ -1,6 +1,26 @@
+# Python
 __pycache__/
+*.py[cod]
+
+# Pytest
 .pytest_cache/
-screenshots/
+
+# Reportes
 reporte.html
-*.pyc
-__pycache__
+htmlcov/
+
+# Screenshots
+screenshots/
+
+# IDE
+.vscode/
+.idea/
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
