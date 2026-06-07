@@ -13,7 +13,9 @@ class LoginPage(BasePage):
 
     LOGIN_BUTTON = (By.ID, "global.getInto")
 
-    LOGIN_FAILED = (By.CSS_SELECTOR, "notification-message")
+    LOGIN_FAILED = (By.XPATH, "//*[contains(@class,'notification')]")
+
+    CAPTCHA_IFRAME = (By.XPATH, "//iframe[contains(@title,'reCAPTCHA')]")
 
     def open_page(self):
 
@@ -47,8 +49,25 @@ class LoginPage(BasePage):
 
         self.click_login()
 
+        self.wait.until(lambda driver: ("/desktop" in driver.current_url or self.has_error_text() or self.is_captcha_present()))
+
+    def has_error_text(self):
+
+        try:
+
+            element = self.driver.find_element(*self.LOGIN_FAILED)
+
+            return element.text.strip() != ""
+
+        except:
+
+            return False
+
     def get_error_message(self):
 
         element = self.find_element(self.LOGIN_FAILED)
-        message = element.text
-        return message
+        return element.text
+
+    def is_captcha_present(self):
+
+        return self.element_exists(self.CAPTCHA_IFRAME)

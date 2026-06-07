@@ -3,6 +3,7 @@ import pytest
 import pytest_html
 from page.login_page import LoginPage
 import os
+from datetime import datetime
 
 
 @pytest.fixture
@@ -36,7 +37,7 @@ def pytest_runtest_makereport(item, call):
 
     extra = getattr(report, "extras", [])
 
-    if report.when == "call" and report.failed:
+    if report.when == "call":
 
         driver = item.funcargs.get("driver")
 
@@ -44,13 +45,23 @@ def pytest_runtest_makereport(item, call):
 
             os.makedirs("screenshots", exist_ok=True)
 
-            screenshot_name = f"screenshots/{item.name}.png"
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+            status = "PASSED" if report.passed else "FAILED"
+
+            screenshot_name = f"screenshots/" f"{item.name}_{status}_{timestamp}.png"
 
             driver.save_screenshot(screenshot_name)
 
             if os.path.exists(screenshot_name):
 
-                html = f'<div><img src="{screenshot_name}" alt="screenshot" width="600" height="300"></div>'
+                html = f"""
+                <div>
+                    <p>{status}</p>
+                    <img src="{screenshot_name}"
+                    width="600">
+                </div>
+                """
 
                 extra.append(pytest_html.extras.html(html))
 

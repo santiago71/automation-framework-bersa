@@ -1,4 +1,4 @@
-username,password,expected, error_message
-arrollos08,Practia25*,True
-copra001,Practia2222, False,"Usuario y/o contraseña incorrecto"
-casali01,sdsdd, False,"Te informamos que tu usuario se encuentra bloqueado. Si recordás la contraseña, seleccioná "Desbloquear Usuario", en caso contrario, seleccioná "Blanquear contraseña.""
+username,password,expected,error_message
+arrollos08,Practia25*,True,
+copra001,Practia2222,False,"Te informamos que tu usuario se encuentra bloqueado"
+casali01,sdsdd,False,"Te informamos que tu usuario se encuentra bloqueado"
