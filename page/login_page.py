@@ -1,9 +1,11 @@
 from selenium.webdriver.common.by import By
-
+import time
 from page.base_page import BasePage
 
 
 class LoginPage(BasePage):
+    
+    #LOCATORS
 
     USERNAME_INPUT = (By.ID, "username")
 
@@ -59,15 +61,24 @@ class LoginPage(BasePage):
 
             return element.text.strip() != ""
 
-        except:
+        except Exception:
 
             return False
 
     def get_error_message(self):
 
-        element = self.find_element(self.LOGIN_FAILED)
-        return element.text
+        elements = self.driver.find_elements(*self.LOGIN_FAILED)
+
+        if elements:
+            return elements[0].text.strip()
+
+        return ""
+    
 
     def is_captcha_present(self):
 
         return self.element_exists(self.CAPTCHA_IFRAME)
+
+    def is_login_succesfull(self):
+        
+        return "/desktop" in self.driver.current_url

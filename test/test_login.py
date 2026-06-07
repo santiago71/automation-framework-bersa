@@ -7,13 +7,13 @@ def test_login(login_p, user):
 
     login_p.login(user["username"], user["password"])
 
-    is_valid = user["valid"].lower() == "true"
+    is_valid = user["expected"].lower() == "true"
 
     if is_valid:
 
         login_p.take_screenshot("login exitoso")
 
-        assert "/desktop" in login_p.driver.current_url
+        assert login_p.is_login_succesfull()
 
     else:
 
