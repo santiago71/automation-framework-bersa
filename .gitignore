@@ -3,3 +3,4 @@ __pycache__/
 screenshots/
 reporte.html
 *.pyc
+__pycache__
