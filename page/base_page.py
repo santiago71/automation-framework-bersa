@@ -30,6 +30,7 @@ class BasePage:
 
         return self.driver.find_elements(*locator)
 
+<<<<<<< HEAD
     def wait_homepage(self):
 
         self.wait.until(EC.url_contains("/desktop"))
@@ -40,12 +41,17 @@ class BasePage:
 
         return len(elements) > 0
 
+=======
+>>>>>>> 0f9283e4534d9b48374b38c66ecf84388efd46ef
     def take_screenshot(self, name):
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
         self.driver.save_screenshot(f"screenshots/{name}_{timestamp}.png")
+<<<<<<< HEAD
 
     def wait_for_text_in_element(self, locator):
 
         self.wait.until(lambda driver: self.get_text(locator).strip() != "")
+=======
+>>>>>>> 0f9283e4534d9b48374b38c66ecf84388efd46ef

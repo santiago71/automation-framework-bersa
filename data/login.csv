@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 username,password,expected,error_message
 arrollos08,Practia25*,True,
 copra001,Practia2222,False,"Te informamos que tu usuario se encuentra bloqueado"
 casali01,sdsdd,False,"Te informamos que tu usuario se encuentra bloqueado"
+=======
+username,password,valid,error_message
+standard_user,secret_sauce,True
+locked_out_user,secret_sauce,False,"Epic sadface: Sorry, this user has been locked out."
+problem_user,secret_sauce,True
+usuario_malo,password_malo,False,"Epic sadface: Username and password do not match any user in this service"
+>>>>>>> 0f9283e4534d9b48374b38c66ecf84388efd46ef

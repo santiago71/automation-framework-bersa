@@ -1,9 +1,16 @@
-from selenium import webdriver
+import os
+
+from datetime import datetime
+
 import pytest
 import pytest_html
+
+from selenium import webdriver
+
 from page.login_page import LoginPage
+from page.inventory_page import InventoryPage
+from page.cart_page import CartPage
 import os
-from datetime import datetime
 
 
 @pytest.fixture
@@ -26,6 +33,16 @@ def driver():
 def login_p(driver):
 
     return LoginPage(driver)
+
+
+@pytest.fixture
+def inventory_page(driver):
+
+    page = LoginPage(driver)
+
+    page.login("standard_user", "secret_sauce")
+
+    return InventoryPage(driver)
 
 
 @pytest.hookimpl(hookwrapper=True)
